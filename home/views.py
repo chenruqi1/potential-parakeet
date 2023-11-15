@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+import joblib
+model = joblib.load('static/random_forest_regressor')
 # Create your views here.
 def index(request):
 
@@ -13,4 +14,24 @@ def contact(request):
     return render(request,'contact.html')
 def prediction(request):
 
-    return render(request,'prediction.html')
+    if request.method == 'POST':
+       # print('enter into the POST request')
+        age = int(request.POST.get('age'))
+        sex = int(request.POST.get('sex'))
+        bmi = int(request.POST.get('bmi'))
+        children = int(request.POST.get('children'))
+        smoker = int(request.POST.get('smoker'))
+        region = int(request.POST.get('region'))
+
+        #print(age, bmi, sex, children, smoker,region)
+        pred = round(model.predict([[age, sex, bmi, children, smoker, region]])[0])
+        #print(pred)
+
+        output = {
+            'output':pred
+
+        }
+
+        return render(request, 'prediction.html',output)
+    else:
+        return render(request,'prediction.html')

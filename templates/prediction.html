@@ -8,16 +8,15 @@
   <div class="container px-5 py-24 mx-auto">
     <div class="flex flex-col text-center w-full mb-12">
       <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Insurance Prediction</h1>
-      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify, subway tile poke farm-to-table. Franzen you probably haven't heard of them man bun deep.</p>
+      <p class="lg:w-2/3 mx-auto leading-relaxed text-base"> Simplify decision-making with confidence in your insurance choices.</p>
         <br> <b>
         {% if output %}
         <h2 class ='text-success'>Insurance Prediction: {{output}}</h2>
         {% endif %}
-
     </b>
     </div>
 
-   <form method="post", action="/prediction">
+   <form method="post" action="{% url 'prediction' %}">
        {% csrf_token %}
        <div class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-end">
           <div class="relative flex-grow w-full">
@@ -52,7 +51,7 @@
             <select id="smoker" name="smoker" class="form-select w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" aria-label="Default select example">
               <option selected>Open this select menu</option>
               <option value="1">Yes</option>
-              <option value="2">No</option>
+              <option value="0">No</option>
             </select>
 
           </div>
@@ -60,7 +59,7 @@
             <label for="email" class="leading-7 text-sm text-gray-600">Select your region</label>
             <select id='region' name="region" class="form-select bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" aria-label="Default select example">
                   <option selected>Open this select menu</option>
-                  <option value="1">southwest</option>
+                  <option value="1">Southwest</option>
                   <option value="2">southeast</option>
                   <option value="3">northwest</option>
                   <option value="4">northeast</option>

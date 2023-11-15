@@ -5,13 +5,13 @@ model = joblib.load('static/random_forest_regressor')
 # Create your views here.
 def index(request):
 
-    return render(request,'index.html')
+    return render(request, 'index.html')
 def about(request):
 
-    return render(request,'about.html')
+    return render(request, 'about.html')
 def contact(request):
 
-    return render(request,'contact.html')
+    return render(request, 'contact.html')
 def login(request):
 
     return render(request,'login.html')
@@ -22,7 +22,7 @@ def registration(request):
 def prediction(request):
 
     if request.method == 'POST':
-       # print('enter into the POST request')
+        print('enter into the POST request')
         age = int(request.POST.get('age'))
         sex = int(request.POST.get('sex'))
         bmi = int(request.POST.get('bmi'))
@@ -30,9 +30,9 @@ def prediction(request):
         smoker = int(request.POST.get('smoker'))
         region = int(request.POST.get('region'))
 
-        #print(age, bmi, sex, children, smoker,region)
+        print(age, bmi, sex, children, smoker,region)
         pred = round(model.predict([[age, sex, bmi, children, smoker, region]])[0])
-        #print(pred)
+        print(pred)
 
         output = {
             'output':pred
@@ -41,4 +41,4 @@ def prediction(request):
 
         return render(request, 'prediction.html',output)
     else:
-        return render(request,'prediction.html')
+        return render(request, 'prediction.html')

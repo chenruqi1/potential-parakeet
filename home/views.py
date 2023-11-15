@@ -12,6 +12,13 @@ def about(request):
 def contact(request):
 
     return render(request,'contact.html')
+def login(request):
+
+    return render(request,'login.html')
+def registration(request):
+
+    return render(request,'registration.html')
+
 def prediction(request):
 
     if request.method == 'POST':

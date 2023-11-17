@@ -28,7 +28,6 @@ def login(request):
 def registration(request):
     return render(request, 'registration.html')
 
-
 def create_feature(df):
     df['hour'] = df.index.hour
     df['dayofweek'] = df.index.dayofweek
@@ -37,37 +36,6 @@ def create_feature(df):
     df['year'] = df.index.year
     df['dayofyear'] = df.index.dayofyear
     return df
-
-
-def get_model_historical_data(start_timestamp, end_timestamp):
-    # Specify the path to your CSV file
-    csv_file_path = r'C:\Users\RChen23\PycharmProjects\Projects\Energy_forecasting\static\code_debug\AEP_hourly.csv'
-
-    # Read the CSV file into a DataFrame
-    df = pd.read_csv(csv_file_path)
-
-    # Assuming 'Datetime' is the name of your timestamp column
-    df['Datetime'] = pd.to_datetime(df['Datetime'])
-
-    # Filter the DataFrame based on the date range
-    original_range_df = df[(df['Datetime'] >= start_timestamp) & (df['Datetime'] <= end_timestamp)]
-    original_range_df = df[(df['Datetime'] >= start_timestamp) & (df['Datetime'] <= end_timestamp)].copy()
-
-    original_range_df.loc[:, 'Datetime'] = pd.to_datetime(original_range_df['Datetime'])
-    original_range_df.sort_values(by='Datetime', inplace=True)
-    original_range_df = original_range_df.sort_values(by='Datetime').copy()
-
-    # Set 'Datetime' as the index
-    original_range_df.set_index('Datetime', inplace=True)
-
-    # Ensure you create a copy of the DataFrame to avoid SettingWithCopyWarning
-    df_copy = original_range_df.copy()
-    print('********&&&&&')
-    print(len(df_copy))
-
-
-    return original_range_df
-
 
 def get_model_historical_data(start_timestamp, end_timestamp):
     # Specify the path to your CSV file
@@ -96,6 +64,8 @@ def get_model_historical_data(start_timestamp, end_timestamp):
     print(len(df_copy))
 
     return df_copy
+# views.py
+
 def prediction(request):
     if request.method == 'POST':
         print('enter into the POST request')
@@ -112,18 +82,12 @@ def prediction(request):
         start_date = forecast_datetime - pd.DateOffset(days=1)
         end_date = forecast_datetime + pd.DateOffset(days=10)
 
-        # Define the features used during training
-        features = ['hour', 'dayofweek', 'quarter', 'month', 'year', 'dayofyear']
+        # Create features for the input datetime
+        forecast_features = create_feature(pd.DataFrame(index=[forecast_datetime]))
 
-        # Create features for the forecast timestamps
-        forecast_df = pd.DataFrame(index=pd.date_range(start=start_date, end=end_date, freq='H'))
-        forecast_df = create_feature(forecast_df)
-
-        # Make predictions for each forecast timestamp
-        predicted_energy_consumption = model.predict(forecast_df[features])
-
-        # Create a DataFrame with forecasted values and timestamps
-        forecast_df['Predicted_Energy_Consumption'] = predicted_energy_consumption
+        # Use the forecast_features in your prediction logic
+        predictions = model.predict(forecast_features)
+        average_prediction = round(predictions.mean(), 2)  # Calculate the average of predictions
 
         # Getting the historical data from the model
         historical_data = get_model_historical_data(start_date, end_date)
@@ -131,15 +95,16 @@ def prediction(request):
         # Extracting historical data for the chart
         historical_data_labels = historical_data.index.strftime('%Y-%m-%d %H:%M:%S').tolist()
         historical_data_values = historical_data['AEP_MW'].tolist()
-
+        print('))))))))')
+        print(predictions.tolist())
         output = {
-            'output': forecast_df['Predicted_Energy_Consumption'].mean,
+            'output': f'{average_prediction:.2f} MW',
             'historical_data': historical_data,
             'start_date': start_date,
             'end_date': end_date,
             'historical_data_labels': historical_data_labels,
             'historical_data_values': historical_data_values,
-            'predicted_values': predicted_energy_consumption.tolist(),
+            'predicted_values': predictions.tolist(),  # Convert predictions to a list
             'predicted_label': 'Predicted Energy Consumption',
         }
 

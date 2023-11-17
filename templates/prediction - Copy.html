@@ -11,7 +11,7 @@
       <p class="lg:w-2/3 mx-auto leading-relaxed text-base"> Simplify decision-making with confidence in your energy choices.</p>
         <br> <b>
         {% if output %}
-        <h2 class ='text-success'>Energy Forecast: {{output}}</h2>
+        <h2 class ='text-success'>Energy Forecast((Average consumption in 10 days)): {{output}}</h2>
         {% endif %}
     </b>
     </div>
@@ -31,11 +31,17 @@
     {% if output %}
         <div class="mt-4">
             <p class="text-lg font-bold text-indigo-700">Predicted Energy Consumption:</p>
-                <p>Start Date: {{ start_date }}</p>
-                <p>End Date: {{ end_date }}</p>
-            <p class="text-xl text-gray-800">Average consumption:{{ output }}</p>
+            <p class="text-xl text-gray-800">{{ output }}</p>
         </div>
     {% endif %}
+
+<div class="mt-8">
+    <h2 class="text-2xl font-medium title-font mb-4 text-gray-900">Historical and Predicted Trend</h2>
+    <p>Start Date: {{ start_date }}</p>
+    <p>End Date: {{ end_date }}</p>
+</div>
+
+
 
 <!-- Historical trend chart -->
 <div class="mt-8">

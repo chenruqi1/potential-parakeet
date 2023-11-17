@@ -18,18 +18,19 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
-          <li><a href="/about" class="nav-link px-2 text-white">About Us</a></li>
-          <li><a href="/prediction" class="nav-link px-2 text-white">Prediction</a></li>
-          <li><a href="/contact" class="nav-link px-2 text-white">Contact</a></li>
+          <li><a href="{% url 'about' %}" class="nav-link px-2 text-white">About Us</a></li>
+          <li><a href="{% url 'prediction' %}" class="nav-link px-2 text-white">Prediction</a></li>
+          <li><a href="{% url 'contact' %}" class="nav-link px-2 text-white">Contact</a></li>
         </ul>
+
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
           <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
         </form>
 
         <div class="text-end">
-          <a href="/login">  <button type="button" class="btn btn-outline-light me-2">Login</button> </a>
-          <a href="/registration"> <button type="button" class="btn btn-warning">Sign-up</button> </a>
+          <a href="{% url 'login' %}">  <button type="button" class="btn btn-outline-light me-2">Login</button> </a>
+          <a href="{% url 'registration' %}"> <button type="button" class="btn btn-warning">Sign-up</button> </a>
         </div>
       </div>
     </div>
@@ -45,8 +46,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
           <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
         </svg>
-        <span class="ml-3 text-xl">Insurance Predictor</span>
-      </a>
+        <span class="ml-3 text-xl">Energy Forecast</a>
       <p class="mt-2 text-sm text-gray-500">Air plant banjo lyft occupy retro adaptogen indego</p>
     </div>
     <div class="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
